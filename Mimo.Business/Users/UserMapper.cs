@@ -1,0 +1,107 @@
+using System;
+using System.Linq;
+
+namespace Mimo.Business.Users
+{
+    public static class UserMapper
+    {
+        public static User ToBusiness(Backend.Users.User user)
+        {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+
+            return new User
+            {
+                Name = user.Name,
+                LessonInfos = user.LessonInfos.Select(ToBusiness).ToList(),
+                ChapterInfos = user.ChapterInfos.Select(ToBusiness).ToList(),
+                CourseInfos = user.CourseInfos.Select(ToBusiness).ToList()
+            };
+        }
+
+        public static LessonInfo ToBusiness(Backend.Users.LessonInfo lessonInfo)
+        {
+            if (lessonInfo == null) throw new ArgumentNullException(nameof(lessonInfo));
+
+            return new LessonInfo
+            {
+                Completed = lessonInfo.Completed,
+                LessonName = lessonInfo.LessonName,
+                Started = lessonInfo.Started
+            };
+        }
+
+        public static ChapterInfo ToBusiness(Backend.Users.ChapterInfo chapterInfo)
+        {
+            if (chapterInfo == null) throw new ArgumentNullException(nameof(chapterInfo));
+
+            return new ChapterInfo
+            {
+                Completed = chapterInfo.Completed,
+                Started = chapterInfo.Started,
+                ChapterName = chapterInfo.ChapterName
+            };
+        }
+
+        public static CourseInfo ToBusiness(Backend.Users.CourseInfo courseInfo)
+        {
+            if (courseInfo == null) throw new ArgumentNullException(nameof(courseInfo));
+
+            return new CourseInfo
+            {
+                CourseName = courseInfo.CourseName,
+                Started = courseInfo.Started,
+                Completed = courseInfo.Completed
+            };
+        }
+
+        public static Backend.Users.User ToBackend(User user)
+        {
+            if (user == null) throw new ArgumentNullException(nameof(user));
+
+            return new Backend.Users.User
+            {
+                Name = user.Name,
+                LessonInfos = user.LessonInfos.Select(ToBackend),
+                ChapterInfos = user.ChapterInfos.Select(ToBackend),
+                CourseInfos = user.CourseInfos.Select(ToBackend)
+            };
+        }
+
+        public static Backend.Users.LessonInfo ToBackend(LessonInfo lessonInfo)
+        {
+            if(lessonInfo == null) throw new ArgumentNullException(nameof(lessonInfo));
+
+            return new Backend.Users.LessonInfo
+            {
+                Started = lessonInfo.Started,
+                Completed = lessonInfo.Completed,
+                LessonName = lessonInfo.LessonName
+            };
+        }
+
+        public static Backend.Users.ChapterInfo ToBackend(ChapterInfo chapterInfo)
+        {
+            if (chapterInfo == null) throw new ArgumentNullException(nameof(chapterInfo));
+
+            return new Backend.Users.ChapterInfo
+            {
+                Started = chapterInfo.Started,
+                Completed = chapterInfo.Completed,
+                ChapterName = chapterInfo.ChapterName
+            };
+        }
+
+        public static Backend.Users.CourseInfo ToBackend(CourseInfo courseInfo)
+        {
+            if(courseInfo == null) throw new ArgumentNullException(nameof(courseInfo));
+
+            return new Backend.Users.CourseInfo
+            {
+                Completed = courseInfo.Completed,
+                Started = courseInfo.Started,
+                CourseName = courseInfo.CourseName
+            };
+        }
+
+    }
+}
