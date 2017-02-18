@@ -8,36 +8,29 @@ namespace Mimo.Business.Courses
 {
     public sealed class CoursesRepository : ICoursesRepository
     {
-        private static CoursesContext GetContext()
+        private CoursesContext Context { get; }
+
+        public CoursesRepository(CoursesContext context)
         {
-            return new CoursesContext();
+            Context = context;
         }
 
         public async Task AddRangeAsync(IEnumerable<Course> courses, CancellationToken cancellationToken)
         {
-            using (var context = GetContext())
-            {
-                await context.Courses.AddRangeAsync(CoursesMapper.ToBackend(courses), cancellationToken);
-                await context.SaveChangesAsync(cancellationToken);
-            }
+            await Context.Courses.AddRangeAsync(CoursesMapper.ToBackend(courses), cancellationToken);
+            await Context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task AddAsync(Course course, CancellationToken cancellationToken)
         {
-            using (var context = GetContext())
-            {
-                await context.Courses.AddAsync(CoursesMapper.ToBackend(course), cancellationToken);
-                await context.SaveChangesAsync(cancellationToken);
-            }
+            await Context.Courses.AddAsync(CoursesMapper.ToBackend(course), cancellationToken);
+            await Context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<Course>> GetAll(CancellationToken cancellationToken)
         {
-            using (var context = GetContext())
-            {
-                var courses = await context.Courses.ToListAsync(cancellationToken);
-                return CoursesMapper.ToBusiness(courses);
-            }
+            var courses = await Context.Courses.ToListAsync(cancellationToken);
+            return CoursesMapper.ToBusiness(courses);
         }
     }
 }

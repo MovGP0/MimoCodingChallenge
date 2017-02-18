@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
@@ -21,11 +22,20 @@ namespace Mimo.Frontend.Controllers
         private AddLessonUnitOfWork AddLessonUnitOfWork { get; }
 
         [HttpPost]
-        public async Task Post([FromBody]LessonInfo lessonInfo, CancellationToken cancellationToken)
+        public async Task Post(
+            [FromBody]string courseName, 
+            [FromBody]string chapterName, 
+            [FromBody]string lessonName, 
+            [FromBody]DateTime started, 
+            [FromBody]DateTime completed, 
+            CancellationToken cancellationToken)
         {
             var userNameClaim = User.Claims.First(c => c.Type == ClaimTypes.Name);
             var userName = userNameClaim.Value;
-            await AddLessonUnitOfWork.ExecuteAsync(userName, lessonInfo, cancellationToken);
+
+            var lessonInfo = new LessonInfo(lessonName, started, completed);
+
+            await AddLessonUnitOfWork.ExecuteAsync(userName, courseName, chapterName, lessonInfo, cancellationToken);
         }
     }
 }

@@ -7,5 +7,6 @@ namespace Mimo.Business.Users
     {
         Task<User> GetAsync(string userName, CancellationToken cancellationToken);
         Task AddAsync(User user, CancellationToken cancellationToken);
+        Task AddLessonAsync(string userName, string courseName, string chapterName, LessonInfo lessonInfo, CancellationToken cancellationToken);
     }
 }

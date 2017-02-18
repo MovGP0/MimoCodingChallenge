@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Mimo.Backend.Tests": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,11 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Mimo.Business.Users
 {
-    public class CourseInfo
+    public sealed class CourseInfo
     {
-        public string CourseName { get; set; }
-        public DateTime Started { get; set; }
-        public DateTime Completed { get; set; }
+        public CourseInfo(string courseName, DateTime started, DateTime completed, IEnumerable<ChapterInfo> chapterInfos)
+        {
+            CourseName = courseName;
+            Started = started;
+            Completed = completed;
+            ChapterInfos = chapterInfos.ToImmutableArray();
+        }
+
+        public string CourseName { get; }
+        public DateTime Started { get; }
+        public DateTime Completed { get; }
+        public IEnumerable<ChapterInfo> ChapterInfos { get; }
     }
 }

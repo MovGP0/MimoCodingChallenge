@@ -1,12 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Mimo.Business.Users
 {
-    public class User
+    public sealed class User
     {
-        public string Name { get; set; }
-        public IList<CourseInfo> CourseInfos { get; set; }
-        public IList<ChapterInfo> ChapterInfos { get; set; }
-        public IList<LessonInfo> LessonInfos { get; set; }
+        public User(string name, IEnumerable<CourseInfo> courseInfos)
+        {
+            Name = name;
+            CourseInfos = courseInfos.ToImmutableArray();
+        }
+
+        public string Name { get; }
+        public IEnumerable<CourseInfo> CourseInfos { get; }
     }
 }

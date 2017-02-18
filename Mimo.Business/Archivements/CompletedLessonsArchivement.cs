@@ -1,4 +1,5 @@
-﻿using Mimo.Business.Users;
+﻿using System.Linq;
+using Mimo.Business.Users;
 
 namespace Mimo.Business.Archivements
 {
@@ -7,7 +8,11 @@ namespace Mimo.Business.Archivements
         public override string Name => $"Complete {NumberOfLessonsRequired} lessons";
         public override bool IsApplyableToUser(User user)
         {
-            var numberOfLessons = user.LessonInfos.GetNumberOfCompletedLessons();
+            var numberOfLessons = user.CourseInfos
+                .SelectMany(ci => ci.ChapterInfos)
+                .SelectMany(ci => ci.LessonInfos)
+                .GetNumberOfCompletedLessons();
+
             return numberOfLessons >= NumberOfLessonsRequired;
         }
 

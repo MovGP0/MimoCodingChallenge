@@ -1,3 +1,4 @@
+using System.Linq;
 using Mimo.Business.Users;
 
 namespace Mimo.Business.Archivements
@@ -7,7 +8,7 @@ namespace Mimo.Business.Archivements
         public override string Name => $"Complete {NumberOfChaptersRequired} chapters";
         public override bool IsApplyableToUser(User user)
         {
-            var nuberOfCompletedChapters = user.ChapterInfos.GetNumberOfCompletedChapters();
+            var nuberOfCompletedChapters = user.CourseInfos.SelectMany(ci => ci.ChapterInfos).GetNumberOfCompletedChapters();
             return nuberOfCompletedChapters >= NumberOfChaptersRequired;
         }
 

@@ -15,29 +15,24 @@ namespace Mimo.Business.UoW
 
         private IUsersRepository UsersRepository { get; }
 
-        public async Task ExecuteAsync(string userName, LessonInfo lessonInfo, CancellationToken cancellationToken)
+        public async Task ExecuteAsync(string userName, string courseName, string chapterName, LessonInfo lessonInfo, CancellationToken cancellationToken)
         {
+            if(string.IsNullOrWhiteSpace(userName)) throw new ArgumentNullException(nameof(userName));
+            if(string.IsNullOrWhiteSpace(courseName)) throw new ArgumentNullException(nameof(courseName));
+            if(string.IsNullOrWhiteSpace(chapterName)) throw new ArgumentNullException(nameof(chapterName));
+            if(lessonInfo == null) throw new ArgumentNullException(nameof(lessonInfo));
+            if(lessonInfo.Started == default(DateTime)) throw new ArgumentException(nameof(lessonInfo));
+            if(string.IsNullOrWhiteSpace(lessonInfo.LessonName)) throw new ArgumentException(nameof(lessonInfo));
+            
             var user = await UsersRepository.GetAsync(userName, cancellationToken);
 
-            RemoveProviouslyStartedLesson(user, lessonInfo);
-            AddLesson(user, lessonInfo);
-        }
+            var courseInfo = user.CourseInfos.SingleOrDefault(ci => ci.CourseName == courseName);
+            if (courseInfo == null) throw new InvalidOperationException($"User has not started course '{courseName}'.");
 
-        private static void AddLesson(User user, LessonInfo lessonInfo)
-        {
-            user.LessonInfos.Add(lessonInfo);
-        }
+            var chapterInfo = courseInfo.ChapterInfos.SingleOrDefault(ci => ci.ChapterName == chapterName);
+            if(chapterInfo == null) throw new InvalidOperationException($"User has not started chapter '{chapterName}'.");
 
-        private static void RemoveProviouslyStartedLesson(User user, LessonInfo lessonInfo)
-        {
-            var nonCompletedLesson = user.LessonInfos
-                .Where(li => li.Completed == default(DateTime))
-                .SingleOrDefault(li => li.LessonName == lessonInfo.LessonName);
-
-            if (nonCompletedLesson != default(LessonInfo))
-            {
-                user.LessonInfos.Remove(nonCompletedLesson);
-            }
+            await UsersRepository.AddLessonAsync(userName, courseName, chapterName, lessonInfo, cancellationToken);
         }
     }
 }

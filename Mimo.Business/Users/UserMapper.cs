@@ -9,13 +9,9 @@ namespace Mimo.Business.Users
         {
             if (user == null) throw new ArgumentNullException(nameof(user));
 
-            return new User
-            {
-                Name = user.Name,
-                LessonInfos = user.LessonInfos.Select(ToBusiness).ToList(),
-                ChapterInfos = user.ChapterInfos.Select(ToBusiness).ToList(),
-                CourseInfos = user.CourseInfos.Select(ToBusiness).ToList()
-            };
+            return new User(
+                user.Name, 
+                user.CourseInfos.Select(ToBusiness));
         }
 
         public static LessonInfo ToBusiness(Backend.Users.LessonInfo lessonInfo)
@@ -23,11 +19,11 @@ namespace Mimo.Business.Users
             if (lessonInfo == null) throw new ArgumentNullException(nameof(lessonInfo));
 
             return new LessonInfo
-            {
-                Completed = lessonInfo.Completed,
-                LessonName = lessonInfo.LessonName,
-                Started = lessonInfo.Started
-            };
+            (
+                lessonInfo.LessonName,
+                lessonInfo.Started,
+                lessonInfo.Completed
+            );
         }
 
         public static ChapterInfo ToBusiness(Backend.Users.ChapterInfo chapterInfo)
@@ -35,11 +31,12 @@ namespace Mimo.Business.Users
             if (chapterInfo == null) throw new ArgumentNullException(nameof(chapterInfo));
 
             return new ChapterInfo
-            {
-                Completed = chapterInfo.Completed,
-                Started = chapterInfo.Started,
-                ChapterName = chapterInfo.ChapterName
-            };
+            (
+                chapterInfo.ChapterName, 
+                chapterInfo.Started, 
+                chapterInfo.Completed,
+                chapterInfo.LessonInfos.Select(ToBusiness)
+            );
         }
 
         public static CourseInfo ToBusiness(Backend.Users.CourseInfo courseInfo)
@@ -47,11 +44,12 @@ namespace Mimo.Business.Users
             if (courseInfo == null) throw new ArgumentNullException(nameof(courseInfo));
 
             return new CourseInfo
-            {
-                CourseName = courseInfo.CourseName,
-                Started = courseInfo.Started,
-                Completed = courseInfo.Completed
-            };
+            (
+                courseInfo.CourseName,
+                courseInfo.Started,
+                courseInfo.Completed, 
+                courseInfo.ChapterInfos.Select(ToBusiness)
+            );
         }
 
         public static Backend.Users.User ToBackend(User user)
@@ -61,8 +59,6 @@ namespace Mimo.Business.Users
             return new Backend.Users.User
             {
                 Name = user.Name,
-                LessonInfos = user.LessonInfos.Select(ToBackend),
-                ChapterInfos = user.ChapterInfos.Select(ToBackend),
                 CourseInfos = user.CourseInfos.Select(ToBackend)
             };
         }
