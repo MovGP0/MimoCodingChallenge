@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Threading;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,8 +8,10 @@ using Microsoft.Extensions.Logging;
 using Mimo.Backend.Courses;
 using Mimo.Backend.Users;
 using Mimo.Business.Courses;
+using Mimo.Business.Seeder;
 using Mimo.Business.UoW;
 using Mimo.Business.Users;
+using System.Threading.Tasks;
 
 namespace Mimo.Frontend
 {
@@ -55,16 +58,19 @@ namespace Mimo.Frontend
 
             if (env.IsDevelopment())
             {
-                ConfigureDevelopmentEnvironment(app);
+                ConfigureDevelopmentEnvironmentAsync(app, CancellationToken.None).Wait();
             }
         }
 
-        private static void ConfigureDevelopmentEnvironment(IApplicationBuilder app)
+        private static async Task ConfigureDevelopmentEnvironmentAsync(IApplicationBuilder app, CancellationToken cancellationToken)
         {
             app.UseDeveloperExceptionPage();
-
+            
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
+                await serviceScope.SeedCoursesAsync(cancellationToken);
+                await serviceScope.SeedUsersAsync(cancellationToken);
+
                 serviceScope.ServiceProvider.GetService<CoursesContext>().Database.Migrate();
                 serviceScope.ServiceProvider.GetService<UsersContext>().Database.Migrate();
             }
