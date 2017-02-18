@@ -33,7 +33,7 @@ namespace Mimo.Business.Tests
             var courses = new[]
             {
                 new Course {Name = "Swift"},
-                new Course {Name = "Javascript"},
+                new Course {Name = "JavaScript"},
                 new Course {Name = "C#"}
             };
 
