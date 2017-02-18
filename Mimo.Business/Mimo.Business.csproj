@@ -3,6 +3,7 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mimo.Backend\Mimo.Backend.csproj" />
+    <ProjectReference Include="..\Mimo.Backend.Courses\Mimo.Backend.Courses.csproj" />
+    <ProjectReference Include="..\Mimo.Backend.Users\Mimo.Backend.Users.csproj" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,7 @@
 using System.Threading.Tasks;
-using Mimo.Backend.Courses;
 using Xunit;
 
-namespace Mimo.Backend.Tests.Courses
+namespace Mimo.Backend.Courses.Tests
 {
     public sealed class CoursesContextTests : AppSettingsTest
     { 

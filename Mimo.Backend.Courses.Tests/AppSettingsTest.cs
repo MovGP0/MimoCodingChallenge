@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace Mimo.Backend.Tests
+namespace Mimo.Backend.Courses.Tests
 {
     public abstract class AppSettingsTest
     {

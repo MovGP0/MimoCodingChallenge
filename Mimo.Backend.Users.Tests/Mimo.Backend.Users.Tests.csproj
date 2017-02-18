@@ -18,7 +18,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0-beta5-build1225" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mimo.Backend\Mimo.Backend.csproj" />
+    <ProjectReference Include="..\Mimo.Backend.Users\Mimo.Backend.Users.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
