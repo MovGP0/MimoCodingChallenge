@@ -6,9 +6,6 @@
     <OutputType>Library</OutputType>
     <PackageId>Mimo.Backend</PackageId>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <FileUpgradeFlags>40</FileUpgradeFlags>
-    <UpgradeBackupLocation>..\Backup1\</UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
     <ApplicationIcon />
     <OutputTypeEx>library</OutputTypeEx>
     <StartupObject />

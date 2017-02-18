@@ -4,8 +4,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <FileUpgradeFlags>40</FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
     <ApplicationIcon />
     <OutputTypeEx>exe</OutputTypeEx>
     <StartupObject />
