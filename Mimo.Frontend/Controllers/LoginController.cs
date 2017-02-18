@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Mimo.Frontend.Controllers
 {
+    [Authorize]
     [Route("login")]
     public class LoginController : Controller
     {
@@ -16,7 +17,7 @@ namespace Mimo.Frontend.Controllers
         
         [AllowAnonymous]
         [HttpGet("{username}")]
-        public async Task Login(string username, CancellationToken cancellationToken)
+        public async Task Get(string username, CancellationToken cancellationToken)
         {
             var claims = new[]
             {
