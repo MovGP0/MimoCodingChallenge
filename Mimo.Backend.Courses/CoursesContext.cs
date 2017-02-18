@@ -14,12 +14,7 @@ namespace Mimo.Backend.Courses
         {
             ConnectionString = connectionString;
         }
-
-        public CoursesContext(DbContextOptions<CoursesContext> options) 
-            : base(options)
-        {
-        }
-
+        
         public DbSet<Course> Courses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

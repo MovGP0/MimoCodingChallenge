@@ -1,17 +1,14 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Mimo.Backend.Courses;
 
 namespace Mimo.Business.Seeder
 {
     public static class CoursesSeeder
     {
-        public static async Task SeedCoursesAsync(this IServiceScope serviceScope, CancellationToken cancellationToken)
+        public static async Task SeedCoursesAsync(this CoursesContext context, CancellationToken cancellationToken)
         {
-            var context = serviceScope.ServiceProvider.GetService<CoursesContext>();
-
             if (!context.Courses.Any())
             {
                 var courses = new[]

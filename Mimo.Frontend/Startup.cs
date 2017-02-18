@@ -68,11 +68,13 @@ namespace Mimo.Frontend
             
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                await serviceScope.SeedCoursesAsync(cancellationToken);
-                await serviceScope.SeedUsersAsync(cancellationToken);
+                var coursesContext = serviceScope.ServiceProvider.GetService<CoursesContext>();
+                await coursesContext.Database.MigrateAsync(cancellationToken);
+                await coursesContext.SeedCoursesAsync(cancellationToken);
 
-                serviceScope.ServiceProvider.GetService<CoursesContext>().Database.Migrate();
-                serviceScope.ServiceProvider.GetService<UsersContext>().Database.Migrate();
+                var usersContext = serviceScope.ServiceProvider.GetService<UsersContext>();
+                await usersContext.Database.MigrateAsync(cancellationToken);
+                await usersContext.SeedUsersAsync(cancellationToken);
             }
         }
     }

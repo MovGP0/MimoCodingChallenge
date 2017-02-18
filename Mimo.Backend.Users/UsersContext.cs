@@ -15,11 +15,6 @@ namespace Mimo.Backend.Users
             ConnectionString = connectionString;
         }
         
-        public UsersContext(DbContextOptions<UsersContext> options) 
-            : base(options)
-        {
-        }
-
         public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
