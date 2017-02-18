@@ -6,7 +6,11 @@ namespace Mimo.Backend.Courses
     {
         private string ConnectionString { get; }
 
-        public CoursesContext(string connectionString = null)
+        public CoursesContext()
+        {
+        }
+
+        public CoursesContext(string connectionString)
         {
             ConnectionString = connectionString;
         }

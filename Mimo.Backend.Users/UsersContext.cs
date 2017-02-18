@@ -6,6 +6,10 @@ namespace Mimo.Backend.Users
     {
         private string ConnectionString { get; }
 
+        public UsersContext()
+        {
+        }
+
         public UsersContext(string connectionString = null)
         {
             ConnectionString = connectionString;
