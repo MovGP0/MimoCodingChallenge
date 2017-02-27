@@ -11,8 +11,8 @@ using Mimo.Business.Users;
 namespace Mimo.Frontend.Controllers
 {
     [Authorize]
-    [Route("lesson")]
-    public class LessonController : Controller
+    [Route(@"v1/course/{courseName}/chapter/{chapterName}/lesson")]
+    public sealed class LessonController : Controller
     {
         public LessonController(AddLessonUnitOfWork addLessonUnitOfWork)
         {
@@ -22,10 +22,11 @@ namespace Mimo.Frontend.Controllers
         private AddLessonUnitOfWork AddLessonUnitOfWork { get; }
 
         [HttpPost]
+        [Route(@"/{lessonName}")]
         public async Task Post(
-            [FromBody]string courseName, 
-            [FromBody]string chapterName, 
-            [FromBody]string lessonName, 
+            [FromRoute]string courseName, 
+            [FromRoute]string chapterName, 
+            [FromRoute]string lessonName, 
             [FromBody]DateTime started, 
             [FromBody]DateTime completed, 
             CancellationToken cancellationToken)

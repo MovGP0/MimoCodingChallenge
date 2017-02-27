@@ -9,7 +9,7 @@ using Mimo.Business.UoW;
 namespace Mimo.Frontend.Controllers
 {
     [Authorize]
-    [Route("archivement")]
+    [Route("v1/archivement")]
     public class ArchivementController : Controller
     {
         public ArchivementController(GetArchivementsForUserUnitOfWork getArchivementsForUserUnitOfWork)
